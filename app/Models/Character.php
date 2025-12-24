@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
+
+class Character extends Model
+{
+    use SoftDeletes; // Подключаем Soft Deletes
+
+    protected $fillable = [
+        'character_name', 
+        'character_tag', 
+        'short_description', 
+        'full_biography', 
+        'image_path', 
+        'release_date'
+    ];
+
+    // МУТАТОР: Перед сохранением в БД преобразуем дату
+    public function setReleaseDateAttribute($value)
+    {
+        $this->attributes['release_date'] = Carbon::parse($value)->format('Y-m-d');
+    }
+
+    // АКСЕССОР: При выводе во фронтенд меняем формат на ДД.ММ.ГГГГ
+    public function getReleaseDateAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format('d.m.Y') : null;
+    }
+}
