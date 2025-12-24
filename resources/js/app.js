@@ -26,11 +26,19 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 modalImg.style.display = 'none';
             }
+
+            const date = button.getAttribute('data-date');
+            infoModal.querySelector('#modalDate').textContent = date ? date : 'Не указана';
         };
 
         // Слушатель открытия модалки
         infoModal.addEventListener('show.bs.modal', (event) => {
             updateModalContent(event.relatedTarget);
+            const date = button.getAttribute('data-date');
+                const modalDate = infoModal.querySelector('#modalDate');
+            if (modalDate) {
+                modalDate.textContent = date ? date : 'Не указана';
+            }
         });
 
         // СЛУШАТЕЛЬ СТРЕЛОК КЛАВИАТУРЫ

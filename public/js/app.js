@@ -7472,11 +7472,18 @@ document.addEventListener('DOMContentLoaded', function () {
       } else {
         modalImg.style.display = 'none';
       }
+      var date = button.getAttribute('data-date');
+      infoModal.querySelector('#modalDate').textContent = date ? date : 'Не указана';
     };
 
     // Слушатель открытия модалки
     infoModal.addEventListener('show.bs.modal', function (event) {
       updateModalContent(event.relatedTarget);
+      var date = button.getAttribute('data-date');
+      var modalDate = infoModal.querySelector('#modalDate');
+      if (modalDate) {
+        modalDate.textContent = date ? date : 'Не указана';
+      }
     });
 
     // СЛУШАТЕЛЬ СТРЕЛОК КЛАВИАТУРЫ

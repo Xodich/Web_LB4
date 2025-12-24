@@ -8,24 +8,20 @@ use Carbon\Carbon;
 
 class Character extends Model
 {
-    use SoftDeletes; // Подключаем Soft Deletes
+    use SoftDeletes;
 
     protected $fillable = [
-        'character_name', 
-        'character_tag', 
-        'short_description', 
-        'full_biography', 
-        'image_path', 
-        'release_date'
+        'character_name', 'character_tag', 'short_description', 
+        'full_biography', 'image_path', 'release_date'
     ];
 
-    // МУТАТОР: Перед сохранением в БД преобразуем дату
+    // Мутатор: сохранение в БД
     public function setReleaseDateAttribute($value)
     {
-        $this->attributes['release_date'] = Carbon::parse($value)->format('Y-m-d');
+        $this->attributes['release_date'] = $value ? Carbon::parse($value)->format('Y-m-d') : null;
     }
 
-    // АКСЕССОР: При выводе во фронтенд меняем формат на ДД.ММ.ГГГГ
+    // Аксессор: вывод на экран
     public function getReleaseDateAttribute($value)
     {
         return $value ? Carbon::parse($value)->format('d.m.Y') : null;
