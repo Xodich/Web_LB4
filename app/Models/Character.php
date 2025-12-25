@@ -15,7 +15,7 @@ class Character extends Model
         'full_biography', 'image_path', 'release_date'
     ];
 
-    // Мутатор: сохранение в БД
+    // Готовит дату к записи в базу (превращает её в формат SQL)
     public function setReleaseDateAttribute($value)
     {
         $this->attributes['release_date'] = $value ? Carbon::parse($value)->format('Y-m-d') : null;

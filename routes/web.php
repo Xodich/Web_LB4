@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-// 1. Обязательно добавьте этот импорт, чтобы Laravel знал, где искать ваш контроллер
+// Импорт чтобы Laravel видел контроллер
 use App\Http\Controllers\CharacterController;
 
 

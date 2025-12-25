@@ -12992,6 +12992,7 @@ body {
   flex-direction: column;
   height: 100% !important;
   overflow: hidden;
+  transition: transform 0.2s;
 }
 .row > .col:nth-child(1) .item-card {
   background-color: rgb(57.806122449, 77.4602040816, 112.143877551);
@@ -13053,11 +13054,21 @@ body {
 .row > .col:nth-child(20) .item-card {
   background-color: rgb(126.5244897959, 149.0408163265, 188.7755102041);
 }
+.item-card .img-container {
+  height: 230px; /* Фиксированная высота рамки */
+  padding: 12px; /* ОТСТУП от границ карточки */
+  background-color: rgba(0, 0, 0, 0.1); /* Легкая подложка под фото */
+  overflow: hidden;
+}
 .item-card .card-img-top {
-  height: 200px;
+  height: 100%;
   width: 100%;
+  border-radius: 4px;
+  /* ГЛАВНОЕ: чтобы СВЕРХУ не обрезалось вообще */
   -o-object-fit: cover;
      object-fit: cover;
+  -o-object-position: top !important;
+     object-position: top !important; /* Прижимает фото к верхнему краю, обрезая только низ */
 }
 .item-card .card-body {
   padding: 20px !important;
@@ -13087,6 +13098,12 @@ body {
   padding: 4px 8px;
   font-size: 0.7em;
   border-radius: 3px;
+}
+
+.modal-body .img-fluid, .wide-container .img-fluid {
+  -o-object-fit: contain !important;
+     object-fit: contain !important; /* Гарантируем, что в модалке фото тоже не обрежется */
+  padding: 10px;
 }
 
 .form-title {

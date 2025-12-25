@@ -9,6 +9,8 @@
             <div class="img-container">
                 @if($character->image_path)
                     <img src="{{ asset('storage/' . $character->image_path) }}" class="card-img-top" alt="{{ $character->character_name }}">
+                @else
+                    <img src="{{ asset('data/default.png') }}" class="card-img-top">
                 @endif
             </div>
             <div class="card-body d-flex flex-column">
@@ -20,7 +22,7 @@
                             data-index="{{ $index }}"
                             data-name="{{ $character->character_name }}"
                             data-bio="{{ $character->full_biography }}"
-                            data-date="{{ $character->release_date }}" {{-- Дата передается сюда --}}
+                            data-date="{{ $character->release_date }}"
                             data-img="{{ asset('storage/' . $character->image_path) }}">
                         Детали
                     </button>

@@ -108,29 +108,44 @@ body {
     flex-direction: column;
     height: 100% !important; 
     overflow: hidden;
+    transition: transform 0.2s;
 
-    // Цикл покраски (nth-child на колонку)
+
     @for $i from 1 through 20 {
         .row > .col:nth-child(#{$i}) & {
             background-color: color.adjust(color.adjust($item-bg, $lightness: 3%), $lightness: $i * 1.5%);
         }
     }
 
-    .card-img-top {
-        height: 200px; // Фиксированная высота на главной
-        width: 100%;
-        object-fit: cover;
+        .img-container {
+        height: 230px;               /* Фиксированная высота рамки */
+        padding: 12px;               /* ОТСТУП от границ карточки */
+        background-color: rgba(0, 0, 0, 0.1); /* Легкая подложка под фото */
+        overflow: hidden;
     }
 
+    .card-img-top {
+        height: 100%;
+        width: 100%;
+        border-radius: 4px;
+
+        /* ГЛАВНОЕ: чтобы СВЕРХУ не обрезалось вообще */
+        object-fit: cover;           
+        object-position: top !important; /* Прижимает фото к верхнему краю, обрезая только низ */
+    }
+
+    
     .card-body {
-        padding: 20px !important; // Отступы внутри карточки
+        padding: 20px !important; 
         flex-grow: 1;
         display: flex;
         flex-direction: column;
         text-align: center;
     }
 
-    .card-title { color: $h3-color; font-size: 1.1em; margin-top: 10px; }
+
+
+        .card-title { color: $h3-color; font-size: 1.1em; margin-top: 10px; }
     
     .card-text {
         color: color.adjust($text-color, $lightness: 25%);
@@ -147,6 +162,15 @@ body {
         padding: 4px 8px;
         font-size: 0.7em;
         border-radius: 3px;
+    }
+
+}
+
+
+.modal-body, .wide-container {
+    .img-fluid {
+        object-fit: contain !important; /* Гарантируем, что в модалке фото тоже не обрежется */
+        padding: 10px;
     }
 }
 
