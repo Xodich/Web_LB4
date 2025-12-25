@@ -1,7 +1,6 @@
 @use 'sass:color';
 @use 'sass:list';
 
-// --- ПЕРЕМЕННЫЕ ---
 $grid-width: 1000px;
 $bg-color: #263653;
 $header-bg: #1b263b;
@@ -12,24 +11,21 @@ $h3-color: #E0E8F0;
 $item-bg: #324361;
 $padding-size: 15px;
 
-// --- BOOTSTRAP ---
 @use "bootstrap/scss/bootstrap" as * with (
     $grid-breakpoints: (
         xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px, xxl: 1500px, wide: 1600px
     ),
     $container-max-widths: (
-        sm: 540px, md: 720px, lg: 960px, xl: 1000px // Фиксируем 1000px
+        sm: 540px, md: 720px, lg: 960px, xl: 1000px
     )
 );
 
-// --- ШРИФТЫ ---
 @font-face {
     font-family: 'Optimus';
     src: url('/data/Optimus.ttf') format('truetype'); 
     font-weight: normal; font-style: normal;
 }
 
-// --- ГЛОБАЛЬНЫЕ СТИЛИ (ФИКС ОБРЕЗАНИЯ) ---
 html {
     height: auto !important;
     min-height: 100%;
@@ -47,7 +43,6 @@ body {
     overflow-x: hidden;
 }
 
-// --- ШАПКА ---
 .custom-navbar {
     background-color: $header-bg;
     height: 70px;
@@ -82,7 +77,6 @@ body {
     }
 }
 
-// --- КОНТЕНТ ---
 .content-wrapper {
     flex: 1 0 auto;
     padding-top: 30px;
@@ -94,9 +88,8 @@ body {
     margin: 0 auto;
 }
 
-// --- КАРТОЧКИ (ГЛАВНАЯ) ---
 .row-cols-lg-4 .col {
-    display: flex; // Чтобы карточки в ряду были одной высоты
+    display: flex;
 }
 
 .item-card {
@@ -118,9 +111,9 @@ body {
     }
 
         .img-container {
-        height: 230px;               /* Фиксированная высота рамки */
-        padding: 12px;               /* ОТСТУП от границ карточки */
-        background-color: rgba(0, 0, 0, 0.1); /* Легкая подложка под фото */
+        height: 230px;
+        padding: 12px;
+        background-color: rgba(0, 0, 0, 0.1);
         overflow: hidden;
     }
 
@@ -129,9 +122,8 @@ body {
         width: 100%;
         border-radius: 4px;
 
-        /* ГЛАВНОЕ: чтобы СВЕРХУ не обрезалось вообще */
         object-fit: cover;           
-        object-position: top !important; /* Прижимает фото к верхнему краю, обрезая только низ */
+        object-position: top !important;
     }
 
     
@@ -169,12 +161,11 @@ body {
 
 .modal-body, .wide-container {
     .img-fluid {
-        object-fit: contain !important; /* Гарантируем, что в модалке фото тоже не обрежется */
+        object-fit: contain !important;
         padding: 10px;
     }
 }
 
-// --- ФОРМЫ (ДОБАВЛЕНИЕ/РЕДАКТИРОВАНИЕ) ---
 .form-title {
     color: $h1-color !important;
     font-family: 'Optimus';
@@ -189,14 +180,13 @@ body {
     &:focus { border-color: $h1-color !important; box-shadow: none; }
 }
 
-// --- ПОДРОБНАЯ ИНФОРМАЦИЯ (SHOW) ---
 .wide-container {
-    max-width: 1300px !important; // Широкое окно
+    max-width: 1300px !important;
     margin: 0 auto;
     
     .item-card {
         .card-img-top {
-            height: auto; // Отменяем 200px для большой страницы
+            height: auto;
             max-height: 700px;
             object-fit: contain;
         }
@@ -204,12 +194,11 @@ body {
 }
 
 .character-detail-text {
-    color: #b0d4ff !important; // Голубоватый текст
+    color: #b0d4ff !important;
     line-height: 1.8;
     font-size: 1.2rem;
 }
 
-// --- ПОДВАЛ ---
 .footer {
     background-color: $header-bg;
     padding: 20px 0;
@@ -225,7 +214,6 @@ body {
     .social-icon { height: 20px; opacity: 0.7; &:hover { opacity: 1; } }
 }
 
-// --- КНОПКИ ---
 .btn-primary, .btn-submit-custom {
     background-color: $item-bg !important;
     border: 1px solid $button-bg !important;
@@ -234,14 +222,13 @@ body {
     &:hover { background-color: lighten($item-bg, 10%) !important; }
 }
 
-// Отключаем старые XXL контейнеры, держим 1000px
 .container.grid-container-override {
     @media (min-width: 1200px) { max-width: 1000px !important; }
 }
 
 #infoModal {
     .modal-xl {
-        max-width: 800px; // Делаем модалку очень широкой
+        max-width: 800px;
     }
     
     .modal-content {

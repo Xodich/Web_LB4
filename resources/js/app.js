@@ -31,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
             infoModal.querySelector('#modalDate').textContent = date ? date : 'Не указана';
         };
 
-        // Слушатель открытия модалки
         infoModal.addEventListener('show.bs.modal', (event) => {
             updateModalContent(event.relatedTarget);
             const date = button.getAttribute('data-date');
@@ -41,9 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // СЛУШАТЕЛЬ СТРЕЛОК КЛАВИАТУРЫ
         document.addEventListener('keydown', (event) => {
-            // Работает только если модалка открыта
             if (infoModal.classList.contains('show')) {
                 let nextIndex = -1;
 
