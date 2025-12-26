@@ -17,6 +17,8 @@ use App\Http\Controllers\CharacterController;
 
 Route::get('user/{user}', [CharacterController::class, 'userCharacters'])->name('user.characters');
 
+
+// Создавать может любой юзер
 Route::middleware(['auth'])->group(function () {
     // Основной CRUD (создавать может любой авторизованный)
     Route::resource('characters', CharacterController::class)->except(['index', 'show']);

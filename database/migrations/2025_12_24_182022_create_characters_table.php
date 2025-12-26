@@ -21,9 +21,8 @@ class CreateCharactersTable extends Migration
             $table->text('full_biography');
             $table->string('image_path')->nullable();
             $table->date('release_date')->nullable();
-            // Добавили связь с юзером сюда
-            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
-            $table->softDeletes(); // Если используешь мягкое удаление
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');  // Связь юзера и персонажа
+            $table->softDeletes();
             $table->timestamps();
         });
     }

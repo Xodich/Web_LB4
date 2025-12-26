@@ -42,11 +42,5 @@
         <button type="submit" class="btn btn-primary w-100 py-2">
             ВОЙТИ
         </button>
-
-        <div class="text-center mt-3">
-            <a href="{{ route('register') }}" class="text-white opacity-50 small" style="text-decoration: none; font-family: 'Optimus';">
-                НЕТ АККАУНТА? РЕГИСТРАЦИЯ
-            </a>
-        </div>
     </form>
 </x-guest-layout>

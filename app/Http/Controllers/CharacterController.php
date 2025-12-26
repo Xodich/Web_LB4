@@ -108,7 +108,7 @@ class CharacterController extends Controller
         $characters = $query->get();
         return view('characters.index', compact('characters', 'users', 'user'));
     }
-
+    // Восстановление
     public function restore($id)
     {
         $character = Character::withTrashed()->findOrFail($id);
