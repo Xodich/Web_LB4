@@ -8,6 +8,7 @@ use Carbon\Carbon;
 
 class Character extends Model
 {
+    // персонажи не удаляются навсегда, а помечаются как "удаленные"
     use SoftDeletes;
 
     protected $fillable = [
@@ -20,27 +21,27 @@ class Character extends Model
         'user_id'
     ];
 
-    // Готовит дату к записи в базу (превращает её в формат SQL)
+    // Мутатор
     public function setReleaseDateAttribute($value)
     {
         $this->attributes['release_date'] = $value ? Carbon::parse($value)->format('Y-m-d') : null;
     }
 
-    // Аксессор: вывод на экран
+    // Аксессор
     public function getReleaseDateAttribute($value)
     {
-        return $value ? \Carbon\Carbon::parse($value)->format('d.m.Y') : null;
+        return $value ? Carbon::parse($value)->format('d.m.Y') : null;
     }
 
-
-
+    // Обратная связь: каждый персонаж закреплен за конкретным пользователем
     public function user() {
         return $this->belongsTo(User::class);
     }
 
-    // Требование: Проверка прав через Events/Closures на уровне модели
+    // Проверка прав на уровне модели: запрещаем удаление чужих объектов всем, кроме администратора
     protected static function booted() {
         static::deleting(function ($character) {
+            // Если текущий пользователь не админ и не автор этого героя — прерываем операцию
             if (auth()->check() && !auth()->user()->is_admin && auth()->id() !== $character->user_id) {
                 abort(403, 'У вас нет прав на удаление этого объекта');
             }
