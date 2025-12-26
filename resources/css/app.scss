@@ -125,14 +125,14 @@ body {
 // --- МОДАЛКА (ОКНО ПОДРОБНОЙ ИНФОРМАЦИИ) ---
 #infoModal {
     .modal-dialog {
-        max-width: 600px !important; // Ширина окна 600px
+        max-width: 500px !important; // Ширина окна 600px
         margin: 1.75rem auto;
     }
 
     .modal-content {
         background-color: #324361;
         border: none;
-        border-radius: 15px;
+        border-radius: 20px;
         box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
     }
 
@@ -299,4 +299,10 @@ body {
             }
         }
     }
+}
+
+
+.item-card.opacity-50 {
+    filter: grayscale(80%); // Сделаем удаленные карточки черно-белыми
+    border: 1px dashed #721c24; // Пунктирная красная рамка
 }

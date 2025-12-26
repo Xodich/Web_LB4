@@ -9,15 +9,23 @@ use Intervention\Image\Facades\Image;
 
 class CharacterController extends Controller
 {
+
+    
     public function index()
     {
-        // Получаем всех героев (базовый уровень)
-        $characters = Character::all(); 
-        
-        // Получаем всех юзеров для навигации (расширенный уровень)
         $users = \App\Models\User::all();
+        // Если зашел админ — показываем вообще всё (включая удаленные)
+        // Если обычный юзер — только активные
+        if (auth()->check() && auth()->user()->is_admin) {
+            $characters = Character::withTrashed()->get();
+        } else {
+            $characters = Character::all();
+        }
+        
         return view('characters.index', compact('characters', 'users'));
     }
+
+
     public function create() {
         return view('characters.create');
     }
@@ -103,26 +111,47 @@ class CharacterController extends Controller
     public function userCharacters(\App\Models\User $user)
     {
         $users = \App\Models\User::all();
-        // Получаем персонажей этого пользователя
         $query = $user->characters();
 
-        // Если смотрит админ или сам владелец - показываем удаленные
+        // Если это страница самого пользователя или смотрит админ — показываем удаленные
         if (auth()->check() && (auth()->id() === $user->id || auth()->user()->is_admin)) {
             $query->withTrashed();
         }
 
         $characters = $query->get();
-        return view('characters.index', compact('characters', 'users'));
+        return view('characters.index', compact('characters', 'users', 'user'));
     }
 
 
-    public function restore($id) {
+    public function restore($id)
+    {
         $character = Character::withTrashed()->findOrFail($id);
-        if (Gate::allows('admin-only')) {
+        
+        // Проверка прав (только админ по ТЗ)
+        if (auth()->user()->is_admin) {
             $character->restore();
+            return back()->with('success', 'Персонаж восстановлен');
         }
-        return back();
+
+        abort(403);
     }
+
+
+
+    public function forceDelete($id)
+    {
+        // Находим персонажа даже среди удаленных
+        $character = Character::withTrashed()->findOrFail($id);
+
+        // Проверяем, что это админ (как требует ТЗ)
+        if (auth()->user()->is_admin) {
+            $character->forceDelete(); // Физическое удаление из БД
+            return back()->with('success', 'Персонаж удален навсегда');
+        }
+
+        abort(403, 'Только администратор может удалять данные безвозвратно');
+    }
+
 
 
 }

@@ -18,8 +18,10 @@
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4" id="characters-grid">
     @foreach($characters as $index => $character)
     <div class="col">
-        <!-- Добавляем прозрачность, если объект в корзине (Trashed) -->
-        <div class="card item-card h-100 {{ $character->trashed() ? 'opacity-50' : '' }}">
+        <!-- Добавляем прозрачность и ч/б фильтр, если объект удален мягко -->
+        <div class="card item-card h-100 {{ $character->trashed() ? 'opacity-50' : '' }}" 
+             style="{{ $character->trashed() ? 'filter: grayscale(1); border: 1px dashed #721c24;' : '' }}">
+            
             <div class="teg">{{ $character->character_tag }}</div>
             
             <div class="img-container">
@@ -37,7 +39,7 @@
                 <p class="card-text flex-grow-1">{{ $character->short_description }}</p>
                 
                 <div class="btn-group-custom mt-auto">
-                    <!-- Кнопка Инфо -->
+                    <!-- Кнопка Инфо (всегда видна) -->
                     <button class="btn btn-primary btn-sm item-detail-btn" 
                             data-bs-toggle="modal" data-bs-target="#infoModal"
                             data-index="{{ $index }}"
@@ -50,8 +52,8 @@
                     </button>
 
                     @auth
-                        <!-- Если пользователь не удален - показываем правку владельцу -->
                         @if(!$character->trashed())
+                            <!-- Кнопки для живых персонажей: доступны владельцу или админу -->
                             @can('update-character', $character)
                                 <a href="{{ route('characters.edit', $character->id) }}" class="btn btn-card-color btn-sm">ПРАВКА</a>
                                 <form action="{{ route('characters.destroy', $character->id) }}" method="POST" class="m-0">
@@ -59,16 +61,22 @@
                                     <button type="submit" class="btn btn-danger btn-sm">Х</button>
                                 </form>
                             @endcan
-                        @endif
-
-                        <!-- Если пользователь удален (Soft Delete) - показываем кнопку восстановления админу -->
-                        @if($character->trashed())
-                            @can('admin-only')
+                        @else
+                            <!-- КНОПКИ ДЛЯ УДАЛЕННЫХ: Видны только админу -->
+                            @if(auth()->user()->is_admin)
+                                <!-- Восстановление -->
                                 <form action="{{ route('characters.restore', $character->id) }}" method="POST" class="m-0">
                                     @csrf
-                                    <button type="submit" class="btn btn-success btn-sm">REG</button>
+                                    <button type="submit" class="btn btn-success btn-sm" title="Восстановить">REG</button>
                                 </form>
-                            @endcan
+                                <!-- Полное удаление (Расширенный уровень) -->
+                                <form action="{{ route('characters.forceDelete', $character->id) }}" method="POST" class="m-0" onsubmit="return confirm('УДАЛИТЬ ИЗ БАЗЫ НАВСЕГДА?')">
+                                    @csrf @method('DELETE')
+                                    <button type="submit" class="btn btn-dark btn-sm" style="background-color: #000 !important; border: 1px solid #721c24;">
+                                        DEL!
+                                    </button>
+                                </form>
+                            @endif
                         @endif
                     @endauth
                 </div>
@@ -79,19 +87,15 @@
 </div>
 
 <!-- Модальное окно -->
-
-<!-- Модальное окно -->
 <div class="modal fade" id="infoModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered"> <!-- Класс modal-xl убрали, так как в SCSS стоит 600px -->
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header border-0">
-                <!-- Имя героя теперь будет по центру благодаря стилям выше -->
                 <h5 class="modal-title form-title" id="modalName"></h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body px-4 pb-4">
                 <div class="text-center mb-4">
-                    <!-- Квадратное фото -->
                     <img id="modalImg" src="" class="img-fluid shadow-lg">
                 </div>
                 
@@ -115,6 +119,4 @@
         </div>
     </div>
 </div>
-
-
 @endsection

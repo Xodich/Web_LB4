@@ -13137,13 +13137,13 @@ body {
 }
 
 #infoModal .modal-dialog {
-  max-width: 600px !important;
+  max-width: 500px !important;
   margin: 1.75rem auto;
 }
 #infoModal .modal-content {
   background-color: #324361;
   border: none;
-  border-radius: 15px;
+  border-radius: 20px;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
 }
 #infoModal .modal-header {
@@ -13341,4 +13341,9 @@ body {
 .auth-page .item-card button[type=submit]:hover {
   background-color: rgb(83.0163043478, 114.9456521739, 151.9836956522) !important;
   transform: translateY(-2px);
+}
+
+.item-card.opacity-50 {
+  filter: grayscale(80%);
+  border: 1px dashed #721c24;
 }

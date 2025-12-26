@@ -20,10 +20,11 @@ Route::get('user/{user}', [CharacterController::class, 'userCharacters'])->name(
 Route::middleware(['auth'])->group(function () {
     // Основной CRUD (создавать может любой авторизованный)
     Route::resource('characters', CharacterController::class)->except(['index', 'show']);
-    
+    Route::post('characters/{id}/restore', [CharacterController::class, 'restore'])->name('characters.restore');
     // Восстановление (только админ)
     Route::post('characters/{id}/restore', [CharacterController::class, 'restore'])
         ->name('characters.restore');
+    Route::delete('characters/{id}/force', [App\Http\Controllers\CharacterController::class, 'forceDelete'])->name('characters.forceDelete');
 });
 
 Route::get('/', [CharacterController::class, 'index'])->name('characters.index');
