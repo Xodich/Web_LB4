@@ -4,6 +4,20 @@
 <div class="row justify-content-center">
     <div class="col-md-8">
         <h2 class="form-title text-center mb-4">ДОБАВИТЬ НОВОГО ГЕРОЯ</h2>
+
+        
+
+        @if ($errors->any())
+        <div class="alert alert-danger" style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+
         
         <form action="{{ route('characters.store') }}" method="POST" enctype="multipart/form-data">
             @csrf

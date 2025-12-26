@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use App\Models\Character;
+use App\Models\User;
+
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -21,10 +24,17 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
-    {
+    public function boot() {
         $this->registerPolicies();
 
-        //
+        // Может ли пользователь редактировать/удалять объект?
+        Gate::define('update-character', function (User $user, Character $character) {
+            return $user->id === $character->user_id || $user->is_admin;
+        });
+
+        // Действия только для админа
+        Gate::define('admin-only', function (User $user) {
+            return $user->is_admin;
+        });
     }
 }

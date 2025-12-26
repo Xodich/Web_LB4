@@ -12932,6 +12932,18 @@ body {
   overflow-x: hidden;
 }
 
+.badge {
+  font-family: "Optimus";
+  letter-spacing: 1px;
+}
+.badge.bg-primary {
+  background-color: #415a77 !important;
+}
+.badge.bg-secondary {
+  background-color: rgba(27, 38, 59, 0.5) !important;
+  border: 1px solid #415a77;
+}
+
 .custom-navbar {
   background-color: #1b263b;
   height: 70px;
@@ -12959,7 +12971,7 @@ body {
 .custom-navbar .title_content .header-button {
   background-color: #415a77;
   color: #E0E8F0;
-  padding: 10px 20px;
+  padding: 8px 15px;
   font-weight: bold;
   text-transform: uppercase;
   border: none;
@@ -13055,23 +13067,22 @@ body {
   background-color: rgb(126.5244897959, 149.0408163265, 188.7755102041);
 }
 .item-card .img-container {
-  height: 230px; /* Фиксированная высота рамки */
-  padding: 12px; /* ОТСТУП от границ карточки */
-  background-color: rgba(0, 0, 0, 0.1); /* Легкая подложка под фото */
+  height: 180px;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
 .item-card .card-img-top {
   height: 100%;
   width: 100%;
   border-radius: 4px;
-  /* ГЛАВНОЕ: чтобы СВЕРХУ не обрезалось вообще */
   -o-object-fit: cover;
      object-fit: cover;
   -o-object-position: top !important;
-     object-position: top !important; /* Прижимает фото к верхнему краю, обрезая только низ */
+     object-position: top !important;
 }
 .item-card .card-body {
-  padding: 20px !important;
+  padding: 15px !important;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -13079,13 +13090,23 @@ body {
 }
 .item-card .card-title {
   color: #E0E8F0;
-  font-size: 1.1em;
-  margin-top: 10px;
+  font-size: 1rem;
+  margin-top: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.item-card .owner-text {
+  font-size: 0.7rem;
+  color: #a39ed3;
+  opacity: 0.8;
+  margin-bottom: 5px;
+  text-transform: uppercase;
 }
 .item-card .card-text {
   color: rgb(145.9788732394, 168.2605633803, 194.5211267606);
-  font-size: 0.9em;
-  margin: 10px 0;
+  font-size: 0.8rem;
+  margin: 5px 0;
   flex-grow: 1;
 }
 .item-card .teg {
@@ -13095,15 +13116,70 @@ body {
   z-index: 50;
   background-color: rgba(38, 54, 83, 0.8);
   color: #E0E8F0;
-  padding: 4px 8px;
-  font-size: 0.7em;
+  padding: 2px 6px;
+  font-size: 0.65em;
   border-radius: 3px;
 }
+.item-card .btn-group-custom {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 4px;
+  justify-content: center;
+  margin-top: auto;
+  width: 100%;
+}
+.item-card .btn-group-custom .btn-sm {
+  padding: 4px 6px;
+  font-size: 0.7rem;
+  flex: 1 1 auto;
+  white-space: nowrap;
+  font-family: "Optimus";
+}
 
-.modal-body .img-fluid, .wide-container .img-fluid {
-  -o-object-fit: contain !important;
-     object-fit: contain !important; /* Гарантируем, что в модалке фото тоже не обрежется */
-  padding: 10px;
+#infoModal .modal-dialog {
+  max-width: 600px !important;
+  margin: 1.75rem auto;
+}
+#infoModal .modal-content {
+  background-color: #324361;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+}
+#infoModal .modal-header {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  padding: 20px 20px 10px;
+}
+#infoModal .modal-header .modal-title {
+  width: 100%;
+  text-align: center;
+  font-size: 2.2rem;
+  color: #a39ed3;
+  font-family: "Optimus", sans-serif;
+  margin: 0;
+}
+#infoModal .modal-header .btn-close {
+  position: absolute;
+  right: 20px;
+  top: 25px;
+}
+#infoModal #modalImg {
+  width: 100%;
+  aspect-ratio: 1/1; /* Делаем картинку идеально квадратной */
+  -o-object-fit: cover;
+     object-fit: cover; /* Заполняем область */
+  -o-object-position: top !important;
+     object-position: top !important; /* Обрезаем только снизу (головы на месте) */
+  border-radius: 10px;
+  border: 3px solid #415a77;
+}
+
+.character-detail-text {
+  color: #b0d4ff !important;
+  line-height: 1.8;
+  font-size: 1.1rem;
 }
 
 .form-title {
@@ -13123,21 +13199,21 @@ body {
   box-shadow: none;
 }
 
-.wide-container {
-  max-width: 1300px !important;
-  margin: 0 auto;
+.auth-card-wrapper input[type=email], .auth-card-wrapper input[type=password], .auth-card-wrapper input[type=text] {
+  width: 100%;
+  background-color: #1b263b !important;
+  border: 1px solid #415a77 !important;
+  color: #fff !important;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 15px;
 }
-.wide-container .item-card .card-img-top {
-  height: auto;
-  max-height: 700px;
-  -o-object-fit: contain;
-     object-fit: contain;
-}
-
-.character-detail-text {
-  color: #b0d4ff !important;
-  line-height: 1.8;
-  font-size: 1.2rem;
+.auth-card-wrapper label {
+  color: #E0E8F0;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  display: block;
 }
 
 .footer {
@@ -13163,14 +13239,24 @@ body {
   opacity: 1;
 }
 
-.btn-primary, .btn-submit-custom {
+.btn-primary, .btn-card-color, .btn-submit-custom {
   background-color: #324361 !important;
   border: 1px solid #415a77 !important;
   color: #E0E8F0 !important;
   transition: 0.3s;
 }
-.btn-primary:hover, .btn-submit-custom:hover {
+.btn-primary:hover, .btn-card-color:hover, .btn-submit-custom:hover {
   background-color: rgb(67.3469387755, 90.2448979592, 130.6530612245) !important;
+}
+
+.btn-danger {
+  background-color: #721c24 !important;
+  border: none !important;
+}
+
+.btn-success {
+  background-color: #155724 !important;
+  border: none !important;
 }
 
 @media (min-width: 1200px) {
@@ -13179,9 +13265,80 @@ body {
   }
 }
 
-#infoModal .modal-xl {
-  max-width: 800px;
+.auth-container {
+  width: 100%;
+  max-width: 450px;
 }
-#infoModal .modal-content {
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+
+.auth-page {
+  background-color: #263653;
+}
+.auth-page .item-card label {
+  color: #a39ed3;
+  font-family: "Optimus";
+  font-size: 0.8rem;
+  margin-bottom: 8px;
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.auth-page .item-card input[type=text],
+.auth-page .item-card input[type=email],
+.auth-page .item-card input[type=password] {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid #415a77 !important;
+  color: #fff !important;
+  padding: 12px 15px;
+  border-radius: 5px;
+  font-size: 1rem;
+  margin-bottom: 20px;
+  transition: 0.3s;
+}
+.auth-page .item-card input[type=text]:focus,
+.auth-page .item-card input[type=email]:focus,
+.auth-page .item-card input[type=password]:focus {
+  outline: none;
+  border-color: #a39ed3 !important;
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  box-shadow: 0 0 10px rgba(163, 158, 211, 0.3);
+}
+.auth-page .item-card .remember-me {
+  color: #4c6889;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+.auth-page .item-card .remember-me input {
+  width: auto;
+  margin: 0;
+}
+.auth-page .item-card .auth-link {
+  color: #a39ed3;
+  font-size: 0.8rem;
+  text-decoration: none;
+  font-family: "Optimus";
+}
+.auth-page .item-card .auth-link:hover {
+  text-decoration: underline;
+}
+.auth-page .item-card button[type=submit] {
+  background-color: #415a77 !important;
+  color: #E0E8F0 !important;
+  border: none;
+  padding: 14px;
+  width: 100%;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-family: "Optimus";
+  letter-spacing: 2px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.auth-page .item-card button[type=submit]:hover {
+  background-color: rgb(83.0163043478, 114.9456521739, 151.9836956522) !important;
+  transform: translateY(-2px);
 }

@@ -1,14 +1,42 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-// Импорт чтобы Laravel видел контроллер
 use App\Http\Controllers\CharacterController;
 
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
 
 
-// 2. Теперь при заходе на главную (/) вас будет перенаправлять на список персонажей
-Route::get('/', function () {
-    return redirect()->route('characters.index');
+Route::get('user/{user}', [CharacterController::class, 'userCharacters'])->name('user.characters');
+
+Route::middleware(['auth'])->group(function () {
+    // Основной CRUD (создавать может любой авторизованный)
+    Route::resource('characters', CharacterController::class)->except(['index', 'show']);
+    
+    // Восстановление (только админ)
+    Route::post('characters/{id}/restore', [CharacterController::class, 'restore'])
+        ->name('characters.restore');
 });
 
-Route::resource('characters', CharacterController::class);
+Route::get('/', [CharacterController::class, 'index'])->name('characters.index');
+
+require __DIR__.'/auth.php';
+
+
+
+
+Route::get('/', [CharacterController::class, 'index'])->name('characters.index');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';

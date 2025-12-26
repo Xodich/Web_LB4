@@ -1,6 +1,7 @@
 @use 'sass:color';
 @use 'sass:list';
 
+// --- ПЕРЕМЕННЫЕ ---
 $grid-width: 1000px;
 $bg-color: #263653;
 $header-bg: #1b263b;
@@ -26,83 +27,54 @@ $padding-size: 15px;
     font-weight: normal; font-style: normal;
 }
 
-html {
-    height: auto !important;
-    min-height: 100%;
-}
-
+// --- ГЛОБАЛЬНЫЕ ФИКСЫ ---
+html { height: auto !important; min-height: 100%; }
 body {
     background-color: $bg-color;
     font: bold 100% 'Optimus', Arial, sans-serif;
     margin: 0; padding: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    height: auto !important;
-    overflow-y: auto !important;
-    overflow-x: hidden;
+    display: flex; flex-direction: column;
+    min-height: 100vh; height: auto !important;
+    overflow-y: auto !important; overflow-x: hidden;
 }
 
+// --- НАВИГАЦИЯ ПОЛЬЗОВАТЕЛЕЙ (LB4) ---
+.badge {
+    font-family: 'Optimus';
+    letter-spacing: 1px;
+    &.bg-primary { background-color: $button-bg !important; }
+    &.bg-secondary { background-color: rgba($header-bg, 0.5) !important; border: 1px solid $button-bg; }
+}
+
+// --- ШАПКА ---
 .custom-navbar {
     background-color: $header-bg;
     height: 70px;
-    display: flex;
-    align-items: center;
-
+    display: flex; align-items: center;
     .title_content {
-        width: 100%;
-        max-width: $grid-width;
-        margin: 0 auto;
-        padding: 0 42px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        .navbar-brand h1 {
-            color: $h1-color;
-            margin: 0; font-size: 1.5rem;
-        }
-        
+        width: 100%; max-width: $grid-width;
+        margin: 0 auto; padding: 0 42px;
+        display: flex; justify-content: space-between; align-items: center;
+        .navbar-brand h1 { color: $h1-color; margin: 0; font-size: 1.5rem; }
         .icon { height: 50px; margin-right: 20px; }
-
         .header-button {
-            background-color: $button-bg;
-            color: $h3-color;
-            padding: 10px 20px;
-            font-weight: bold;
-            text-transform: uppercase;
-            border: none;
+            background-color: $button-bg; color: $h3-color;
+            padding: 8px 15px; font-weight: bold; text-transform: uppercase; border: none;
             &:hover { background-color: lighten($button-bg, 10%); }
         }
     }
 }
 
-.content-wrapper {
-    flex: 1 0 auto;
-    padding-top: 30px;
-    padding-bottom: 80px;
-}
+.content-wrapper { flex: 1 0 auto; padding-top: 30px; padding-bottom: 80px; }
+.grid-container-override { max-width: $grid-width !important; margin: 0 auto; }
 
-.grid-container-override {
-    max-width: $grid-width !important;
-    margin: 0 auto;
-}
-
-.row-cols-lg-4 .col {
-    display: flex;
-}
+// --- КАРТОЧКИ (Сетка 4 в ряд) ---
+.row-cols-lg-4 .col { display: flex; }
 
 .item-card {
-    position: relative;
-    width: 100%;
-    border: none;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    height: 100% !important; 
-    overflow: hidden;
-    transition: transform 0.2s;
-
+    position: relative; width: 100%; border: none; border-radius: 5px;
+    display: flex; flex-direction: column; height: 100% !important; 
+    overflow: hidden; transition: transform 0.2s;
 
     @for $i from 1 through 20 {
         .row > .col:nth-child(#{$i}) & {
@@ -110,128 +82,221 @@ body {
         }
     }
 
-        .img-container {
-        height: 230px;
-        padding: 12px;
+    .img-container {
+        height: 180px;
+        padding: 10px;
         background-color: rgba(0, 0, 0, 0.1);
         overflow: hidden;
     }
 
     .card-img-top {
-        height: 100%;
-        width: 100%;
-        border-radius: 4px;
-
-        object-fit: cover;           
-        object-position: top !important;
+        height: 100%; width: 100%; border-radius: 4px;
+        object-fit: cover; object-position: top !important;
     }
 
-    
     .card-body {
-        padding: 20px !important; 
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-        text-align: center;
+        padding: 15px !important;
+        flex-grow: 1; display: flex; flex-direction: column; text-align: center;
     }
 
-
-
-        .card-title { color: $h3-color; font-size: 1.1em; margin-top: 10px; }
+    .card-title { color: $h3-color; font-size: 1rem; margin-top: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     
+    .owner-text {
+        font-size: 0.7rem; color: $h1-color; opacity: 0.8; margin-bottom: 5px; text-transform: uppercase;
+    }
+
     .card-text {
         color: color.adjust($text-color, $lightness: 25%);
-        font-size: 0.9em;
-        margin: 10px 0;
-        flex-grow: 1;
+        font-size: 0.8rem; margin: 5px 0; flex-grow: 1;
     }
 
     .teg {
-        position: absolute;
-        top: 10px; left: 10px; z-index: 50;
-        background-color: rgba($bg-color, 0.8);
-        color: $h3-color;
-        padding: 4px 8px;
-        font-size: 0.7em;
-        border-radius: 3px;
+        position: absolute; top: 10px; left: 10px; z-index: 50;
+        background-color: rgba($bg-color, 0.8); color: $h3-color;
+        padding: 2px 6px; font-size: 0.65em; border-radius: 3px;
     }
 
-}
-
-
-.modal-body, .wide-container {
-    .img-fluid {
-        object-fit: contain !important;
-        padding: 10px;
+    .btn-group-custom {
+        display: flex; flex-wrap: nowrap; gap: 4px; justify-content: center; margin-top: auto; width: 100%;
+        .btn-sm { padding: 4px 6px; font-size: 0.7rem; flex: 1 1 auto; white-space: nowrap; font-family: 'Optimus'; }
     }
 }
 
-.form-title {
-    color: $h1-color !important;
-    font-family: 'Optimus';
-    text-transform: uppercase;
-    text-align: center;
+// --- МОДАЛКА (ОКНО ПОДРОБНОЙ ИНФОРМАЦИИ) ---
+#infoModal {
+    .modal-dialog {
+        max-width: 600px !important; // Ширина окна 600px
+        margin: 1.75rem auto;
+    }
+
+    .modal-content {
+        background-color: #324361;
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: center; // Центрирование контента хедера
+        position: relative;
+        padding: 20px 20px 10px;
+
+        .modal-title {
+            width: 100%;
+            text-align: center; // Имя героя по центру
+            font-size: 2.2rem;
+            color: $h1-color;
+            font-family: 'Optimus', sans-serif;
+            margin: 0;
+        }
+
+        .btn-close {
+            position: absolute; // Кнопка закрытия не мешает центрированию
+            right: 20px;
+            top: 25px;
+        }
+    }
+
+    // КВАДРАТНОЕ ФОТО В МОДАЛКЕ
+    #modalImg {
+        width: 100%;
+        aspect-ratio: 1 / 1;      /* Делаем картинку идеально квадратной */
+        object-fit: cover;        /* Заполняем область */
+        object-position: top !important; /* Обрезаем только снизу (головы на месте) */
+        border-radius: 10px;
+        border: 3px solid #415a77;
+    }
 }
 
+.character-detail-text { color: #b0d4ff !important; line-height: 1.8; font-size: 1.1rem; }
+
+// --- ФОРМЫ ---
+.form-title { color: $h1-color !important; font-family: 'Optimus'; text-transform: uppercase; text-align: center; }
 .form-control {
-    background-color: $header-bg !important;
-    color: #fff !important;
+    background-color: $header-bg !important; color: #fff !important;
     border: 1px solid $button-bg !important;
     &:focus { border-color: $h1-color !important; box-shadow: none; }
 }
 
-.wide-container {
-    max-width: 1300px !important;
-    margin: 0 auto;
-    
-    .item-card {
-        .card-img-top {
-            height: auto;
-            max-height: 700px;
-            object-fit: contain;
-        }
+// --- АВТОРИЗАЦИЯ ---
+.auth-card-wrapper {
+    input[type="email"], input[type="password"], input[type="text"] {
+        width: 100%; background-color: $header-bg !important;
+        border: 1px solid $button-bg !important; color: #fff !important;
+        padding: 10px; border-radius: 5px; margin-bottom: 15px;
     }
+    label { color: $h3-color; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 5px; display: block; }
 }
 
-.character-detail-text {
-    color: #b0d4ff !important;
-    line-height: 1.8;
-    font-size: 1.2rem;
-}
-
+// --- ПОДВАЛ ---
 .footer {
-    background-color: $header-bg;
-    padding: 20px 0;
+    background-color: $header-bg; padding: 20px 0;
     .footer_content {
-        max-width: $grid-width;
-        margin: 0 auto;
-        padding: 0 42px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        max-width: $grid-width; margin: 0 auto; padding: 0 42px;
+        display: flex; justify-content: space-between; align-items: center;
     }
     .footer_name { color: $text-color; }
     .social-icon { height: 20px; opacity: 0.7; &:hover { opacity: 1; } }
 }
 
-.btn-primary, .btn-submit-custom {
-    background-color: $item-bg !important;
-    border: 1px solid $button-bg !important;
-    color: $h3-color !important;
-    transition: 0.3s;
+// --- КНОПКИ ---
+.btn-primary, .btn-card-color, .btn-submit-custom {
+    background-color: $item-bg !important; border: 1px solid $button-bg !important;
+    color: $h3-color !important; transition: 0.3s;
     &:hover { background-color: lighten($item-bg, 10%) !important; }
 }
+.btn-danger { background-color: #721c24 !important; border: none !important; }
+.btn-success { background-color: #155724 !important; border: none !important; }
 
 .container.grid-container-override {
     @media (min-width: 1200px) { max-width: 1000px !important; }
 }
 
-#infoModal {
-    .modal-xl {
-        max-width: 800px;
-    }
+
+
+
+// --- СТИЛИ ДЛЯ ВХОДА И РЕГИСТРАЦИИ ---
+.auth-container {
+    width: 100%;
+    max-width: 450px; // Оптимальная ширина для форм
+}
+
+.auth-page {
+    background-color: $bg-color; // Твой темно-синий фон
     
-    .modal-content {
-        box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    .item-card {
+        label {
+            color: $h1-color; // Светло-фиолетовый для подписей
+            font-family: 'Optimus';
+            font-size: 0.8rem;
+            margin-bottom: 8px;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        // ЕДИНЫЙ СТИЛЬ ДЛЯ ВСЕХ ПОЛЕЙ
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.3) !important;
+            border: 1px solid $button-bg !important;
+            color: #fff !important;
+            padding: 12px 15px;
+            border-radius: 5px;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            transition: 0.3s;
+
+            &:focus {
+                outline: none;
+                border-color: $h1-color !important;
+                background-color: rgba(0, 0, 0, 0.5) !important;
+                box-shadow: 0 0 10px rgba($h1-color, 0.3);
+            }
+        }
+
+        // Чекбокс "Запомнить меня"
+        .remember-me {
+            color: $text-color;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            input { width: auto; margin: 0; }
+        }
+
+        // Ссылки (Забыли пароль / Уже зарегистрированы)
+        .auth-link {
+            color: $h1-color;
+            font-size: 0.8rem;
+            text-decoration: none;
+            font-family: 'Optimus';
+            &:hover { text-decoration: underline; }
+        }
+
+        // КНОПКА ОТПРАВКИ
+        button[type="submit"] {
+            background-color: $button-bg !important;
+            color: $h3-color !important;
+            border: none;
+            padding: 14px;
+            width: 100%;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-family: 'Optimus';
+            letter-spacing: 2px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+
+            &:hover {
+                background-color: lighten($button-bg, 10%) !important;
+                transform: translateY(-2px);
+            }
+        }
     }
 }

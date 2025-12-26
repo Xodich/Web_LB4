@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'username', 'is_admin',
     ];
 
     /**
@@ -37,4 +37,28 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function characters() {
+        return $this->hasMany(Character::class);
+    }
+
+    // Требование расширенного уровня: URL через username, а не ID
+    public function getRouteKeyName() {
+        return 'username';
+    }
+
+
+    protected static function booted()
+    {
+        static::creating(function ($user) {
+            // Если username не был введен вручную
+            if (!$user->username) {
+                // Берем имя пользователя, превращаем в транслит (slug) 
+                // и добавляем рандомное число для уникальности
+                $user->username = \Illuminate\Support\Str::slug($user->name) . '_' . rand(100, 999);
+            }
+        });
+    }
+
 }

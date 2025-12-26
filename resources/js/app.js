@@ -1,3 +1,4 @@
+import './bootstrap';
 import * as bootstrap from 'bootstrap';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -8,54 +9,50 @@ document.addEventListener('DOMContentLoaded', () => {
     if (infoModal) {
         const modalInstance = new bootstrap.Modal(infoModal);
 
-        // Функция обновления контента модалки
-        const updateModalContent = (button) => {
-            currentIndex = parseInt(button.getAttribute('data-index'));
+        // ФУНКЦИЯ ЗАПОЛНЕНИЯ МОДАЛКИ
+        const updateModal = (btn) => {
+            currentIndex = parseInt(btn.getAttribute('data-index'));
             
-            const name = button.getAttribute('data-name');
-            const bio = button.getAttribute('data-bio');
-            const img = button.getAttribute('data-img');
-
-            infoModal.querySelector('#modalName').textContent = name;
-            infoModal.querySelector('#modalBio').innerHTML = bio.replace(/\n/g, '<br>');
-            const modalImg = infoModal.querySelector('#modalImg');
+            // Заполняем текстовые поля
+            document.getElementById('modalName').textContent = btn.getAttribute('data-name');
+            document.getElementById('modalBio').innerHTML = btn.getAttribute('data-bio').replace(/\n/g, '<br>');
+            document.getElementById('modalOwnerDisplay').textContent = "Владелец: " + btn.getAttribute('data-owner');
             
+            // ВАЖНО: ЗАПОЛНЯЕМ ДАТУ
+            const date = btn.getAttribute('data-date');
+            document.getElementById('modalDate').textContent = date ? date : 'Не указана';
+            
+            // Обработка картинки
+            const img = btn.getAttribute('data-img');
+            const modalImg = document.getElementById('modalImg');
             if (img && img.includes('storage')) {
                 modalImg.src = img;
                 modalImg.style.display = 'inline-block';
             } else {
+                modalImg.src = '';
                 modalImg.style.display = 'none';
             }
-
-            const date = button.getAttribute('data-date');
-            infoModal.querySelector('#modalDate').textContent = date ? date : 'Не указана';
         };
 
-        infoModal.addEventListener('show.bs.modal', (event) => {
-            updateModalContent(event.relatedTarget);
-            const date = button.getAttribute('data-date');
-                const modalDate = infoModal.querySelector('#modalDate');
-            if (modalDate) {
-                modalDate.textContent = date ? date : 'Не указана';
-            }
+        // Открытие по клику на кнопку "ИНФО"
+        detailButtons.forEach(btn => {
+            btn.addEventListener('click', () => updateModal(btn));
         });
 
-        document.addEventListener('keydown', (event) => {
-            if (infoModal.classList.contains('show')) {
-                let nextIndex = -1;
+        // ПЕРЕКЛЮЧЕНИЕ ПО СТРЕЛКАМ
+        document.addEventListener('keydown', (e) => {
+            if (!infoModal.classList.contains('show')) return;
 
-                if (event.key === 'ArrowRight') {
-                    nextIndex = (currentIndex + 1) % detailButtons.length;
-                } else if (event.key === 'ArrowLeft') {
-                    nextIndex = (currentIndex - 1 + detailButtons.length) % detailButtons.length;
-                }
+            let nextIndex = -1;
+            if (e.key === 'ArrowRight') {
+                nextIndex = (currentIndex + 1) % detailButtons.length;
+            } else if (e.key === 'ArrowLeft') {
+                nextIndex = (currentIndex - 1 + detailButtons.length) % detailButtons.length;
+            }
 
-                if (nextIndex !== -1) {
-                    const nextButton = document.querySelector(`.item-detail-btn[data-index="${nextIndex}"]`);
-                    if (nextButton) {
-                        updateModalContent(nextButton);
-                    }
-                }
+            if (nextIndex !== -1) {
+                const nextBtn = document.querySelector(`.item-detail-btn[data-index="${nextIndex}"]`);
+                if (nextBtn) updateModal(nextBtn);
             }
         });
     }
